@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, User, CheckCircle2 } from 'lucide-react';
 
-export default function SolicitudCard({ solicitud, onAssign, currentUser }) {
+export default function SolicitudCard({ solicitud, onAssign, currentUser, onClick }) {
   const { 
     asunto, 
     cliente, 
@@ -30,7 +30,11 @@ export default function SolicitudCard({ solicitud, onAssign, currentUser }) {
   };
 
   return (
-    <div className={`solicitud-card ${isNueva ? 'estado-nueva' : ''} ${isEnProceso ? 'estado-proceso' : ''}`}>
+    <div 
+      className={`solicitud-card ${isNueva ? 'estado-nueva' : ''} ${isEnProceso ? 'estado-proceso' : ''}`}
+      onClick={onClick}
+      style={{ cursor: onClick ? 'pointer' : 'default' }}
+    >
       
       <div className="card-header">
         <div className="card-date">
@@ -64,6 +68,7 @@ export default function SolicitudCard({ solicitud, onAssign, currentUser }) {
           <select 
             className={`assign-select ${!asignado_a ? 'unassigned-select' : ''}`}
             value={asignado_a || ""}
+            onClick={(e) => e.stopPropagation()}
             onChange={(e) => onAssign(solicitud.id, e.target.value || null)}
           >
             <option value="">SIN ASIGNAR</option>

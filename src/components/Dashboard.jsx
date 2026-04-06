@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import SolicitudCard from './SolicitudCard';
 import NewRequestModal from './NewRequestModal';
+import SolicitudDetailModal from './SolicitudDetailModal';
 
 export default function Dashboard() {
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('ALL'); /* 'ALL', 'MINE', 'UNASSIGNED', 'URGENT' */
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedSolicitud, setSelectedSolicitud] = useState(null);
   const currentUser = 'Mayte'; // Simulación de usuario logueado en base a tus trabajadoras
 
   useEffect(() => {
@@ -37,6 +39,13 @@ export default function Dashboard() {
   const handleNewRequestSuccess = (newSolicitud) => {
     setSolicitudes(prev => [newSolicitud, ...prev]);
     setIsModalOpen(false);
+  };
+
+  const handleUpdateStatus = (id, nuevoEstado) => {
+    setSolicitudes(prev => prev.map(sol => sol.id === id ? { ...sol, estado: nuevoEstado } : sol));
+    if (selectedSolicitud && selectedSolicitud.id === id) {
+      setSelectedSolicitud(prev => ({ ...prev, estado: nuevoEstado }));
+    }
   };
   
   const filteredSolicitudes = solicitudes.filter((solicitud) => {
@@ -101,7 +110,13 @@ export default function Dashboard() {
           <p style={{ color: 'var(--text-secondary)'}}>Conectando a base de datos segura y cargando...</p>
         ) : filteredSolicitudes.length > 0 ? (
           filteredSolicitudes.map((sol) => (
-            <SolicitudCard key={sol.id} solicitud={sol} onAssign={handleAssign} currentUser={currentUser} />
+            <SolicitudCard 
+              key={sol.id} 
+              solicitud={sol} 
+              onAssign={handleAssign} 
+              currentUser={currentUser} 
+              onClick={() => setSelectedSolicitud(sol)}
+            />
           ))
         ) : (
           <p style={{ color: 'var(--text-secondary)'}}>No se han encontrado solicitudes con estos filtros.</p>
@@ -114,6 +129,12 @@ export default function Dashboard() {
           onSuccess={handleNewRequestSuccess} 
         />
       )}
+
+      <SolicitudDetailModal
+        solicitud={selectedSolicitud}
+        onClose={() => setSelectedSolicitud(null)}
+        onUpdateStatus={handleUpdateStatus}
+      />
 
     </div>
   );

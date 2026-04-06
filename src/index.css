@@ -505,3 +505,224 @@ a {
   transform: translateY(-2px);
   box-shadow: 0 6px 8px -1px rgba(29, 78, 216, 0.4);
 }
+
+/* ----- SLIDE OVER PANEL STYLES ----- */
+.slideover-overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 2000;
+  display: flex;
+  justify-content: flex-end; /* Alinea a la derecha */
+  animation: fadeIn 0.3s ease;
+}
+
+.slideover-content {
+  background-color: var(--bg-secondary);
+  width: 100%;
+  max-width: 450px;
+  height: 100%;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideLeft 0.3s ease;
+  position: relative;
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.slideover-header {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: var(--bg-primary);
+}
+
+.slideover-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.slideover-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  font-family: monospace;
+}
+
+.slideover-close {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.slideover-close:hover {
+  color: var(--text-primary);
+}
+
+.slideover-body {
+  padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.detail-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-box {
+  background-color: var(--bg-primary);
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.info-subject {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.client-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.message-box {
+  background-color: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Para preservar los saltos de línea */
+}
+
+.empty-message {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.slideover-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.btn-reply {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--accent-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+
+.btn-reply:hover {
+  background-color: #1e40af;
+}
+
+/* Modificadores de Status en Slider */
+.status-banner {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.status-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.status-select {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  outline: none;
+}
+
+.status-select.estado-nueva {
+  background-color: var(--status-nueva-bg);
+  color: var(--status-nueva-text);
+  border-color: var(--status-nueva-text);
+}
+
+.status-select.estado-proceso {
+  background-color: var(--status-proceso-bg);
+  color: var(--status-proceso-border);
+  border-color: var(--status-proceso-border);
+}
+
+.status-select.estado-confirmada {
+  background-color: var(--status-confirmada-bg);
+  color: var(--status-confirmada-color);
+  border-color: var(--status-confirmada-color);
+}
+
+.status-select.estado-cancelada {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #94a3b8;
+}
+
+.status-loading {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}

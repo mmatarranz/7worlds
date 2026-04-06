@@ -28,7 +28,9 @@ app.get('/api/solicitudes', async (req, res) => {
         s.estado, 
         s.prioridad, 
         s.asignado_a,
-        c.nombre AS cliente
+        c.nombre AS cliente,
+        c.email AS cliente_email,
+        c.telefono AS cliente_telefono
       FROM solicitudes s
       JOIN clientes c ON s.cliente_id = c.id
       ORDER BY s.fecha_entrada DESC
@@ -78,7 +80,9 @@ app.post('/api/solicitudes', async (req, res) => {
       SELECT 
         s.id, s.fecha_entrada, s.asunto, s.cuerpo_mensaje, 
         s.estado, s.prioridad, s.asignado_a,
-        c.nombre AS cliente
+        c.nombre AS cliente,
+        c.email AS cliente_email,
+        c.telefono AS cliente_telefono
       FROM solicitudes s
       JOIN clientes c ON s.cliente_id = c.id
       WHERE s.id = $1
@@ -105,6 +109,22 @@ app.put('/api/solicitudes/:id/asignar', async (req, res) => {
     res.json({ success: true, message: 'Asignación actualizada' });
   } catch (err) {
     console.error('Error asignando:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint: Actualizar estado de una solicitud
+app.put('/api/solicitudes/:id/estado', async (req, res) => {
+  const { id } = req.params;
+  const { estado } = req.body;
+  try {
+    await pool.query(
+      'UPDATE solicitudes SET estado = $1 WHERE id = $2',
+      [estado, id]
+    );
+    res.json({ success: true, message: 'Estado actualizado' });
+  } catch (err) {
+    console.error('Error actualizando estado:', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
