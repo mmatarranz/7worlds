@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import SolicitudCard from './SolicitudCard';
+import NewRequestModal from './NewRequestModal';
 
 export default function Dashboard() {
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('ALL'); /* 'ALL', 'MINE', 'UNASSIGNED', 'URGENT' */
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const currentUser = 'Mayte'; // Simulación de usuario logueado en base a tus trabajadoras
 
   useEffect(() => {
@@ -32,6 +34,10 @@ export default function Dashboard() {
       console.error("Error syncing assignment:", err);
     }
   };
+  const handleNewRequestSuccess = (newSolicitud) => {
+    setSolicitudes(prev => [newSolicitud, ...prev]);
+    setIsModalOpen(false);
+  };
   
   const filteredSolicitudes = solicitudes.filter((solicitud) => {
     switch (activeFilter) {
@@ -55,6 +61,11 @@ export default function Dashboard() {
         <div>
           <h1 className="dashboard-title">Panel de Control</h1>
           <p className="dashboard-subtitle">Gestiona las solicitudes de reservas entrantes</p>
+        </div>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end'}}>
+          <button className="fab-button" onClick={() => setIsModalOpen(true)}>
+            + Nueva Solicitud
+          </button>
         </div>
       </header>
 
@@ -96,6 +107,13 @@ export default function Dashboard() {
           <p style={{ color: 'var(--text-secondary)'}}>No se han encontrado solicitudes con estos filtros.</p>
         )}
       </div>
+
+      {isModalOpen && (
+        <NewRequestModal 
+          onClose={() => setIsModalOpen(false)} 
+          onSuccess={handleNewRequestSuccess} 
+        />
+      )}
 
     </div>
   );
