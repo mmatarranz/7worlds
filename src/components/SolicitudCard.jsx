@@ -69,7 +69,7 @@ export default function SolicitudCard({ solicitud, onAssign, currentUser }) {
             <option value="">SIN ASIGNAR</option>
             <option value="Mayte">Mayte</option>
             <option value="Pepi">Pepi</option>
-            <option value="Nueva">Nueva</option>
+            <option value="Erika">Erika</option>
           </select>
         </div>
       </div>
