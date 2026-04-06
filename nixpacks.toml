@@ -1,0 +1,8 @@
+[phases.install]
+cmds = [
+    "npm cache clean --force",
+    "rm -rf node_modules",
+    "npm install --include=optional",
+    # Instalamos explícitamente el paquete nativo para Linux que NPM está saltándose por un bug de su caché
+    "npm install -D @rolldown/binding-linux-x64-gnu"
+]
