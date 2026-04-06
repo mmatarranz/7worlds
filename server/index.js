@@ -113,7 +113,7 @@ app.put('/api/solicitudes/:id/asignar', async (req, res) => {
 app.use(express.static(path.join(__dirname, '../dist')));
 
 // Redirigir cualquier otra ruta al index.html de React (para evitar errores 404 en subrutas de React Router)
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
