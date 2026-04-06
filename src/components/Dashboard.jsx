@@ -130,11 +130,13 @@ export default function Dashboard() {
         />
       )}
 
-      <SolicitudDetailModal
-        solicitud={selectedSolicitud}
-        onClose={() => setSelectedSolicitud(null)}
-        onUpdateStatus={handleUpdateStatus}
-      />
+      {selectedSolicitud && (
+        <SolicitudDetailModal
+          solicitud={selectedSolicitud}
+          onClose={() => setSelectedSolicitud(null)}
+          onUpdateStatus={handleUpdateStatus}
+        />
+      )}
 
     </div>
   );

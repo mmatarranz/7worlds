@@ -3,7 +3,7 @@ import { Calendar, User, Phone, Mail, Tag, MessageSquare, X } from 'lucide-react
 
 export default function SolicitudDetailModal({ solicitud, onClose, onUpdateStatus }) {
   const [loading, setLoading] = useState(false);
-  const [localEstado, setLocalEstado] = useState(solicitud.estado);
+  const [localEstado, setLocalEstado] = useState(solicitud?.estado || 'nueva');
 
   if (!solicitud) return null;
 
