@@ -6,3 +6,9 @@ cmds = [
     # Instalamos explícitamente el paquete nativo para Linux que NPM está saltándose por un bug de su caché
     "npm install -D @rolldown/binding-linux-x64-gnu"
 ]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "node server/index.js"
